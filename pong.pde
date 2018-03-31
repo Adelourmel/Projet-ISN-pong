@@ -12,11 +12,11 @@ void draw(){
   balle.deplacer();
   gauche.updateDeplacement();
   droite.updateDeplacement();
+  balle.checkJoueur(droite); 
+  balle.checkJoueur(gauche);
   balle.afficher();
   gauche.afficher();
   droite.afficher();
-
-  
 }
 void keyReleased(){
   if(key == 'a'){

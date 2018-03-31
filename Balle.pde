@@ -2,22 +2,43 @@ class Balle {
   int x = width/2;
   int y = height/2;
   int ballSize = 20;
-  int deplacementX = -2;
+  int deplacementX = -5;
   int deplacementY = 4;
   void afficher(){
     fill(255);
     ellipse(x, y, ballSize, ballSize);
   }
+  void checkJoueur(Joueur player){
+    if(player.x >= x - ballSize + deplacementX && player.x < x + deplacementX && player.y < y && (player.y + player.longueur) > y){
+      deplacementX *= -1;
+      
+    }
+  
+  }
   void deplacer(){
+    
+    if (y + deplacementY > (height - ballSize/2) || y + deplacementY < ballSize/2){
+      deplacementY *= -1;
+      
+    }
+    if (x + deplacementX > (width - ballSize/2)){
+      gauche.points += 1;
+      println("Gauche : " + gauche.points + " Droite : " + droite.points);
+      x = width/2;
+      y = height/2;
+      
+    }
+    if (x + deplacementX < 0 + ballSize/2){
+      droite.points += 1;
+      println("Gauche : " + gauche.points + " Droite : " + droite.points);
+      x = width/2;
+      y = height/2;
+    }
     x += deplacementX;
     y += deplacementY;
-    if (y > (height + ballSize) || y<0){
-      deplacementY *= -1;
-    }
-    if (x > (width + ballSize) || x < 0){
-      deplacementX *= -1;
-    }
     
   }
+    
+    
   
 }

@@ -4,7 +4,7 @@ class Joueur {
   int largeur = 20;
   int longueur = 80;
   int bouger = 0;
-  
+  int points = 0;
   Joueur(Boolean place){
     if (place){
       x = 10;
