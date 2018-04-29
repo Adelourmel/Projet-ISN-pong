@@ -5,21 +5,23 @@ class Joueur {
   int longueur = 80;
   int bouger = 0;
   int points = 0;
-  Joueur(Boolean place){
+  Boolean souris = false;
+  Boolean sourisTest = true;
+  Joueur(Boolean place, Boolean psouris){
     if (place){
-      x = 10;
+      x = 20;
     }
     else {
-      x = width - (largeur+10);
+      x = width - (largeur+25);
     }
     y = height/2 - longueur;
+    souris = psouris;
   }
   
   void afficher(){
-  rect(x, y, largeur, longueur);    
+      rect(x, y, largeur, longueur);
+
   }
-  
-  
   
   
   //Fonctions déplacement du joueur 
@@ -27,9 +29,22 @@ class Joueur {
     if ((y + bouger) >= (height - (longueur + 10)) || (y + bouger) <= (10)){
       bouger = 0;
     }
-    y += bouger;
+    if (!souris){
+      y += bouger;
+    }
+    if (souris) {
+      
+       y = mouseY;
+       if (y + longueur > height - 10) {
+         y = height - 10 - longueur;
+      }
+       if (y < 10) {
+         y = 10;
+       }
+    }
   }
   void deplacer(int deplacement){
+    
     bouger = deplacement;
   }
 }

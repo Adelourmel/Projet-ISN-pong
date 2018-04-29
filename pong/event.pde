@@ -1,23 +1,3 @@
-Balle balle;
-Joueur gauche;
-Joueur droite;
-void setup(){
-  size(850, 600);
-  balle = new Balle();
-  gauche = new Joueur(true);
-  droite = new Joueur(false);
-}
-void draw(){
-  background(0);
-  balle.deplacer();
-  gauche.updateDeplacement();
-  droite.updateDeplacement();
-  balle.checkJoueur(droite); 
-  balle.checkJoueur(gauche);
-  balle.afficher();
-  gauche.afficher();
-  droite.afficher();
-}
 void keyReleased(){
   if(key == 'a'){
     gauche.deplacer(0);
@@ -44,5 +24,15 @@ void keyPressed(){
   }
   if (key == 'm'){
     droite.deplacer(6);
+  }
+}
+void clientEvent(Client client){
+  String in = client.readStringUntil('\n');
+  int[] val = {};
+  if (in != null) {
+    in = in.substring(0, in.length() - 1);
+    val = int(split(in, ' '));
+  
+    
   }
 }
