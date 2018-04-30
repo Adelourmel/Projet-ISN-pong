@@ -1,4 +1,6 @@
 import processing.net.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 Balle balle;
 Joueur gauche;
 Joueur droite;
@@ -6,6 +8,7 @@ Client client;
 int choix = 0;
 int cptDbtPt = 4;
 Boolean i = true;
+char reseau = 'n';
 void setup(){
   size(850, 600);
   balle = new Balle();
@@ -14,67 +17,76 @@ void setup(){
 }
 void draw(){
   if (choix != 0) {
-       if (cptDbtPt >= 0) {
-      textSize(105);
-      fill(250);
-      delay (1000);
-      background(0);
-      cptDbtPt--;
-      
-      text(cptDbtPt, width/2, height/2);
-      textAlign(CENTER);
-      println("TEST");
-    }
-    else {
-      switch (choix) {
-   
-       case 1:
-       
-       println("Yop");
-       break;
-      case 2:
-      jeuDuo();
-        break;
-      case 3:
-         break;
-      case 4:
-        break;
-      }
     
+      switch (choix) {
+        case 1:
+          
+          break;
+        case 2:
+          jeuDuo();
+          break;
+        case 3:
+          jeuReseau();
+          break;
+        case 4:
+          break;
+      }
     }
-}
     
   else {
     cptDbtPt = 4;
     choix = menu();
   }
-
 }
 void jeuDuo(){
   if (i) {
-    gauche = new Joueur(true, false);
-    droite = new Joueur(false, false);
-    i = false;
+    if (compteur()) {}
+    else {
+      gauche = new Joueur(true, false);
+      droite = new Joueur(false, false);
+      i = false;
+    }
+    
   }
-  balle.deplacer();
-  gauche.updateDeplacement();
-  droite.updateDeplacement();
-  balle.checkJoueur(droite); 
-  balle.checkJoueur(gauche);
-  updateScreen();
+  else {
+    balle.deplacer();
+    gauche.updateDeplacement();
+    droite.updateDeplacement();
+    balle.checkJoueur(droite); 
+    balle.checkJoueur(gauche);
+    updateScreen();
+  }
+  
 
   
 }
 void jeuReseau(){
-  if (i) {
-    String adresseIp = "127.0.0.1";
+  
+  if (reseau == 'n') {
+    reseau = menuReseau();
+  }
+  if (i && reseau != 'n') {
+    String adresseIp = " ";
+    if (reseau == 's') {
+      
+      //Executer serveur
+      Boolean test = true;
+      if (test) {
+        test = afficherIp();
+        adresseIp = "127.0.0.1";
+      }
+    }
+    else {
+       adresseIp = "127.0.0.1";
+    }
+     
     client = new Client(this, adresseIp, 5204);
     gauche = new Joueur(true, true);
     droite = new Joueur(false, false);
     i = false;
   }
-    balle.deplacer();
-    gauche.updateDeplacement();
+    //balle.deplacer();
+    //gauche.updateDeplacement();
     //sendData(data);
 }
 void updateScreen(){
@@ -85,6 +97,17 @@ void updateScreen(){
   gauche.afficher();
   droite.afficher();
 }
-void sendData(String data) {
-  client.write(data);
+Boolean compteur(){
+  if (cptDbtPt >= 0) {
+      textSize(105);
+      fill(250);
+      delay (1000);
+      background(0);
+      cptDbtPt--;
+      
+      text(cptDbtPt, width/2, height/2);
+      textAlign(CENTER);
+      return true;
+    }
+    return false;
 }

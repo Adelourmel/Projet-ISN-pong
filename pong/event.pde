@@ -28,11 +28,14 @@ void keyPressed(){
 }
 void clientEvent(Client client){
   String in = client.readStringUntil('\n');
-  int[] val = {};
   if (in != null) {
-    in = in.substring(0, in.length() - 1);
-    val = int(split(in, ' '));
-  
+    if (in.charAt(0) != reseau) {
+      int[] val = {};
+      in = in.substring(0, in.length() - 1);
+      val = int(split(in, ' '));
+      recevoirData(val);
+    }
+    
     
   }
 }
