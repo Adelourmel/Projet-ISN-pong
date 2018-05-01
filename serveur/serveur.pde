@@ -7,6 +7,9 @@ void draw() {
   
   Client client = serveur.available();
   if (client != null) {
-    serveur.write(client.readStringUntil('\n'));
+  	String message = client.readStringUntil('\n');
+  		if (message != null) {
+  			serveur.write(message);
+  		}
   }
 }

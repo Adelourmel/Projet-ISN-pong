@@ -9,12 +9,45 @@ String getIp() {
         return adresseIp;
 }
 
-void sendData(String data) {
-  client.write(data);
+void sendData() {
+  String test = " ";
+    if (reseau == 's') {
+      test = reseau + " " + droite.y + "\n";
+      
+    }
+    if (reseau == 'c') {
+      test = reseau + " " + gauche.y + " "+ balle.y + " " + balle.x + " "+ gauche.points + " " + droite.points + "\n";
+    }
+    client.write(test);
+      
 }
 
-void recevoirData(int[] data) {
+void recevoirData() {
+  int[] data = {};
+  if (client.available() > 0) {
+    String in = client.readStringUntil('\n');
+      if (in != null) {
+        if (in.charAt(0) != reseau) {
 
+          
+          in = in.substring(2, in.length() - 1);
+          data = int(split(in, ' '));
+          if (reseau == 's') {
+            println("data : " + data[0] + " " + data[1] + " " + data[2]);
+            gauche.y = data[0];
+            balle.y = data[1];
+            balle.x = data[2];
+            gauche.points = data[3];
+            droite.points = data[4];
+          }
+          if (reseau == 'c') {
+            droite.y = data[0];
+          }
+      }
+    }
+  }
+  
+  
 }
 Boolean afficherIp() {
 	background(0);

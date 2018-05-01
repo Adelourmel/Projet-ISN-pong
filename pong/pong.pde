@@ -17,8 +17,7 @@ void setup(){
 }
 void draw(){
   if (choix != 0) {
-    
-      switch (choix) {
+     switch (choix) {
         case 1:
           
           break;
@@ -49,11 +48,12 @@ void jeuDuo(){
     
   }
   else {
-    balle.deplacer();
-    gauche.updateDeplacement();
     droite.updateDeplacement();
     balle.checkJoueur(droite); 
+    balle.deplacer();
+    gauche.updateDeplacement();
     balle.checkJoueur(gauche);
+    
     updateScreen();
   }
   
@@ -85,10 +85,25 @@ void jeuReseau(){
     droite = new Joueur(false, false);
     i = false;
   }
-    //balle.deplacer();
-    //gauche.updateDeplacement();
-    //sendData(data);
-}
+  if (!i) {
+      recevoirData();
+      if (reseau == 's') {
+        droite.updateDeplacement();
+        
+      }
+      if (reseau == 'c') {
+        balle.deplacer();
+        gauche.updateDeplacement();
+        balle.checkJoueur(droite); 
+        balle.checkJoueur(gauche);
+      }
+      if (frameCount % 2 == 0) {
+        sendData();
+      }
+      
+      updateScreen();
+    }
+  }
 void updateScreen(){
   background(0);
   delimitation();

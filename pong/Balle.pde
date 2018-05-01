@@ -23,14 +23,14 @@ class Balle {
     }
     if (x + deplacementX > (width - ballSize/2)){
       gauche.points += 1;
-      println("Gauche : " + gauche.points + " Droite : " + droite.points);
+      //println("Gauche : " + gauche.points + " Droite : " + droite.points);
       x = width/2;
       y = height/2;
       
     }
     if (x + deplacementX < 0 + ballSize/2){
       droite.points += 1;
-      println("Gauche : " + gauche.points + " Droite : " + droite.points);
+     // println("Gauche : " + gauche.points + " Droite : " + droite.points);
       x = width/2;
       y = height/2;
     }
