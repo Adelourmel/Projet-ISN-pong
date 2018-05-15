@@ -1,12 +1,16 @@
 import processing.net.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.io.IOException;
+import java.lang.ProcessBuilder;
+import java.io.*;
 Balle balle;
 Joueur gauche;
 Joueur droite;
 Client client;
 int choix = 0;
 int cptDbtPt = 4;
+Boolean svr  = true;
 Boolean i = true;
 char reseau = 'n';
 void setup(){
@@ -67,23 +71,35 @@ void jeuReseau(){
   }
   if (i && reseau != 'n') {
     String adresseIp = " ";
+    Boolean test = true;
     if (reseau == 's') {
       
       //Executer serveur
-      Boolean test = true;
+      
       if (test) {
+        
+        if (svr) {
+          print(svr);          
+          svr = false;
+          openServeur();
+        }
+        
         test = afficherIp();
         adresseIp = "127.0.0.1";
       }
     }
-    else {
+    if (reseau == 'c') {
        adresseIp = "127.0.0.1";
+       test = false;
     }
-     
-    client = new Client(this, adresseIp, 5204);
-    gauche = new Joueur(true, true);
-    droite = new Joueur(false, false);
-    i = false;
+    if (!test) {
+      
+      client = new Client(this, adresseIp, 5204);
+      gauche = new Joueur(true, true);
+      droite = new Joueur(false, false);
+      i = false;
+    }
+    
   }
   if (!i) {
       recevoirData();
@@ -126,3 +142,21 @@ Boolean compteur(){
     }
     return false;
 }
+void openServeur () {   
+  //p.command("C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\serveur.exe");
+  String[] cmd = {"start \"test\"C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\serveur.exe"};
+
+
+
+Process p;
+try {
+    int error;
+    p = launch(cmd); //<>//
+    p.waitFor();
+    error = p.exitValue();
+} catch (InterruptedException e) {
+    e.printStackTrace();
+} 
+        
+}
+  

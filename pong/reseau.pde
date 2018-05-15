@@ -55,11 +55,11 @@ Boolean afficherIp() {
 	fill(255);
 	text("Votre adresse IP est : " + getIp(), width/2, 80);
 	textAlign(CENTER);
-	rectangle(160, "Suivant", 250);
-	if (mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600) {
-    rectangle(160, "Suivant", 150);
+	rectangle(360, "Suivant", 250);
+	if (mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600) {
+    rectangle(360, "Suivant", 150);
   }
-	if ((mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600)&& (mousePressed == true)) { 
+ if ((mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600)&& (mousePressed == true)) { 
     return false;
   }
   return true;
