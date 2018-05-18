@@ -8,11 +8,15 @@ Balle balle;
 Joueur gauche;
 Joueur droite;
 Client client;
+String ip;
+Boolean clavier = true;
 int choix = 0;
 int cptDbtPt = 4;
 Boolean svr  = true;
 Boolean i = true;
 char reseau = 'n';
+
+
 void setup(){
   size(850, 600);
   balle = new Balle();
@@ -89,8 +93,9 @@ void jeuReseau(){
       }
     }
     if (reseau == 'c') {
-       adresseIp = "127.0.0.1";
-       test = false;
+
+       background(0);
+       test = entrerIp();
     }
     if (!test) {
       
@@ -144,12 +149,12 @@ Boolean compteur(){
 }
 void openServeur () {   
   //p.command("C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\serveur.exe");
-  String[] cmd = {"start \"test\"C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\serveur.exe"};
+  String[] cmd = {"start \"test\"C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\ serveur.exe"};
 
 
 
 Process p;
-try {
+try {  //<>//
     int error;
     p = launch(cmd); //<>//
     p.waitFor();
@@ -159,4 +164,9 @@ try {
 } 
         
 }
-  
+ String replaceWhitespace(String str) {
+        if (str.contains(" ")) {
+            str = str.replace(" ", "%20");
+        }
+        return str;
+     }
