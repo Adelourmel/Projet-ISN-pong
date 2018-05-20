@@ -16,8 +16,8 @@ int menu() {
   if (mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600) {
     rectangle(360, "Setting", 150);
   }
-  
-  
+
+
   if ((mouseY>=60 && mouseX>=250 && mouseY<=140 && mouseX<=600)&& (mousePressed == true)) { 
     return 1;
   }
@@ -30,7 +30,7 @@ int menu() {
   if ((mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600)&& (mousePressed == true)) { 
     return 4;
   }
-  
+
   return 0;
 }
 void rectangle(int y, String text, int C) {
@@ -56,6 +56,24 @@ char menuReseau() {
   }
   if ((mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600)&& (mousePressed == true)) { 
     return 'c';
+  }
+  return 'n';
+}
+char choixClavier() {
+  background(0);
+  rectangle(160, "Jouer avec le clavier", 250);
+  rectangle(260, "Jouer avec la souris", 250);
+  if (mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600) {
+    rectangle(160, "Jouer avec le clavier", 150);
+  } 
+  if (mouseY>=260 && mouseX>=250 && mouseY<=340 && mouseX<=600) {
+    rectangle(260, "Jouer avec la souris", 150);
+  }
+  if ((mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600)&& (mousePressed == true)) { 
+    return 'c';
+  }
+  if ((mouseY>=260 && mouseX>=250 && mouseY<=340 && mouseX<=600)&& (mousePressed == true)) { 
+    return 's';
   }
   return 'n';
 }

@@ -44,7 +44,6 @@ class Joueur {
     }
   }
   void deplacer(int deplacement){
-    
     bouger = deplacement;
   }
 }

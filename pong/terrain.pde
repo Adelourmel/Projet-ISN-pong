@@ -7,6 +7,7 @@ void delimitation() {
   strokeJoin(MITER);
 } 
 void score() {
-  text(+ gauche.points, 375, 120); 
-  text(+ droite.points, 475, 120);
+  textSize(24);
+  text(gauche.points, 355, 60); 
+  text(droite.points, 495, 60);
 }
