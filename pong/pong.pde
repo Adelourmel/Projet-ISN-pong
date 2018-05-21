@@ -38,35 +38,36 @@ void draw() {
   case 3:
     jeuReseau();
     break;
-  case 4:
-    break;
+
   }
 }
+
 void jeuSolo() {
-	if (i) {
-		
-		if ('s' == choixClavier()) {
-		    clavier = true;
-		    svr = false;
-		}
-		if ('c' == choixClavier()) {
-		    clavier = false;
-		    svr = false;
-		}
-		if (!svr) {
-			gauche = new Joueur(true, clavier);
-     	droite = new Joueur(false, false);
-			i = false;
-		}
-	}
-	
-	if (!i && !compteur()) {
-		balle.deplacer();
-		droite.updateDeplacement();
+  if (i) {
 
-		updateScreen();
+    if ('s' == choixClavier()) {
+      clavier = true;
+      svr = false;
+    }
+    if ('c' == choixClavier()) {
+      clavier = false;
+      svr = false;
+    }
+    if (!svr) {
+      gauche = new Joueur(true, false);
+      droite = new Joueur(false, clavier);
+      i = false;
+    }
+  }
 
-	}
+  if (!i && !compteur()) {
+    balle.checkJoueur(droite); 
+    balle.checkJoueur(gauche);
+    computer();
+    balle.deplacer();
+    droite.updateDeplacement();
+    updateScreen();
+  }
 }
 void jeuDuo() {
   if ('s' == choixClavier()) {
@@ -191,8 +192,7 @@ Boolean compteur() {
   return false;
 }
 void openServeur () {   
-  //p.command("C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\serveur.exe");
-  String[] cmd = {"start \"test\"C:\\Users\\Arnaud 1\\Documents\\Projet ISN\\Projet-ISN-pong\\pong\\ serveur.exe"};
+  String[] cmd = {"start \"test\"serveur.exe"};
 
 
 
@@ -212,4 +212,24 @@ String replaceWhitespace(String str) {
     str = str.replace(" ", "%20");
   }
   return str;
+}
+void init() {
+  adresseIp = " ";
+  clavier = true;
+  choix = 0;
+  cptDbtPt = 4;
+  svr  = true;
+  i = true;
+  reseau = 'n';
+  clavierSouris = true;
+}
+void computer() {
+  if (balle.x<425 &&  balle.deplacementX<0) {
+    if(gauche.y>balle.y-50){
+    gauche.y=gauche.y-6;
+    }
+    if(gauche.y<balle.y-50){
+    gauche.y=gauche.y+6;
+    }
+  }
 }

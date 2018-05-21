@@ -26,7 +26,7 @@ class Joueur {
   
   //Fonctions déplacement du joueur 
   void updateDeplacement(){
-    if ((y + bouger) >= (height - (longueur + 10)) || (y + bouger) <= (10)){
+    if ((y + bouger) >= (height - (longueur + 20)) || (y + bouger) <= (20)){
       bouger = 0;
     }
     if (!souris){
@@ -35,11 +35,11 @@ class Joueur {
     if (souris) {
       
        y = mouseY;
-       if (y + longueur > height - 10) {
-         y = height - 10 - longueur;
+       if (y + longueur > height - 30) {
+         y = height - 30 - longueur;
       }
-       if (y < 10) {
-         y = 10;
+       if (y < 30) {
+         y = 30;
        }
     }
   }
