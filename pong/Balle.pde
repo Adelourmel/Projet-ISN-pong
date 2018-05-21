@@ -9,7 +9,7 @@ class Balle {
     ellipse(x, y, ballSize, ballSize);
   }
   void checkJoueur(Joueur player){
-    if(player.x >= x - ballSize + deplacementX && player.x < x + deplacementX + 10 && player.y < y && (player.y + player.longueur) > y){
+    if(player.x >= x - ballSize + deplacementX - 5 && player.x < x + deplacementX + 5 && player.y < y && (player.y + player.longueur) > y){
       deplacementX *= -1;
       deplacementY = int(random(-5, 5));
       

@@ -1,4 +1,4 @@
- //<>// //<>//  //<>//
+
 import processing.net.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,6 +17,7 @@ int cptDbtPt = 4;
 Boolean svr  = true;
 Boolean i = true;
 char reseau = 'n';
+boolean connectionTest = true;
 Boolean clavierSouris = true;
 void setup() {
   size(850, 600);
@@ -33,7 +34,7 @@ void draw() {
     jeuSolo();
     break;
   case 2:
-  	jeuDuo();
+    jeuDuo();
     break;
   case 3:
     jeuReseau();
@@ -103,8 +104,7 @@ void jeuReseau() {
 
       if (test) {
 
-        if (svr) {
-          print(svr);          
+        if (svr) {      
           svr = false;
           //openServeur();
         }
@@ -117,15 +117,13 @@ void jeuReseau() {
       if (adresseIp == " ") {
         background(0);
         adresseIp = entrerIp();
-        println(adresseIp);
       } else {
         test = false;
       }
-      
     }
     if (!test) {
       
-        client = new Client(this, adresseIp, 5204);
+        
         gauche = new Joueur(true, clavier);
         droite = new Joueur(false, clavier);
         i = false;
@@ -136,31 +134,44 @@ void jeuReseau() {
       if ('s' == choixClavier()) {
         clavier = true;
         clavierSouris = false;
+        client = new Client(this, adresseIp, 5204);
       }
       if ('c' == choixClavier()) {
         clavier = false;
         clavierSouris = false;
+        client = new Client(this, adresseIp, 5204);
       }
 
     } 
     else {
       recevoirData();
-      if (reseau == 's') {
-        droite.updateDeplacement();
+      if (connectionTest) {
+        background(0);
+        fill(255);
+        text("En attente de l'adversaire", width/2, 125);
       }
-      if (reseau == 'c') {
-        balle.deplacer();
-        gauche.updateDeplacement();
-        balle.checkJoueur(droite); 
-        balle.checkJoueur(gauche);
-      }
-      if (frameCount % 4 == 0) {
-        sendData();
-      }
+      else {
+        if (!compteur()) {
+        if (reseau == 's') {
+          droite.updateDeplacement();
+        }
+        if (reseau == 'c') {
+          balle.deplacer();
+          gauche.updateDeplacement();
+          balle.checkJoueur(droite); 
+          balle.checkJoueur(gauche);
+        }
+        if (frameCount % 3 == 0) {
+          sendData();
+        }
 
-      updateScreen();
+        updateScreen();
+      }
+      }
+        
     }
   }
+  
 }
 void updateScreen() {
   background(0);
@@ -217,12 +228,16 @@ void init() {
   clavierSouris = true;
 }
 void computer() {
-  if (balle.x<425 &&  balle.deplacementX<0) {
-    if(gauche.y>balle.y-50){
-    gauche.y=gauche.y-4;
+  if (balle.x<425) {
+    if (gauche.y >23) {
+      if (gauche.y>balle.y-50) {
+        gauche.y=gauche.y-4;
+      }
     }
-    if(gauche.y<balle.y-50){
-    gauche.y=gauche.y+4;
+  }
+  if (gauche.y<balle.y-50) {
+    if (gauche.y<495) {
+      gauche.y=gauche.y+4;
     }
   }
 }

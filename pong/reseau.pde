@@ -1,3 +1,4 @@
+
 String getIp() {
   String adresseIp = " ";
   Boolean ipTest = true;
@@ -20,10 +21,9 @@ String getIp() {
       ipTest = false;
     }
   }
-  println(n);
-  println(adresseIp);
+  
   adresseIp = adresseIp.substring(0, adresseIp.length() - n);
-  println(adresseIp);
+  
   }
   
   return adresseIp;
@@ -44,32 +44,36 @@ void recevoirData() {
   int[] data = {};
   if (client.available() > 0) {
     String in = client.readStringUntil('\n');
-    if (in != null) {
-      if (in.charAt(0) != reseau) {
-
-
-        in = in.substring(2, in.length() - 1);
-        data = int(split(in, ' '));
-        if (reseau == 's') {
-          println("data : " + data[0] + " " + data[1] + " " + data[2]);
-          gauche.y = data[0];
-          balle.y = data[1];
-          balle.x = data[2];
-          gauche.points = data[3];
-          droite.points = data[4];
+      if (in != null) {
+        if (in.charAt(0) == 'A') {
+          connectionTest = false;
         }
-        if (reseau == 'c') {
-          droite.y = data[0];
-        }
+        if (in.charAt(0) != reseau && in.charAt(0) != 'A') {
+
+          
+          in = in.substring(2, in.length() - 1);
+          data = int(split(in, ' '));
+          if (reseau == 's') {
+            gauche.y = data[0];
+            balle.y = data[1];
+            balle.x = data[2];
+            gauche.points = data[3];
+            droite.points = data[4];
+          }
+          if (reseau == 'c') {
+            droite.y = data[0];
+          }
       }
     }
   }
+  
+  
 }
 Boolean afficherIp() {
   background(0);
   textSize(32);
   fill(255);
-  text("Votre adresse IP est : " + getIp(), width/2, 80);
+  text("Votre adresse IP est : " + getIp() + "\n\n Pour assurer le bon fonctionnement \ndu jeu vous devez exécuter le fichier serveur.exe", width/2, 80);
   textAlign(CENTER);
   rectangle(360, "Suivant", 250);
   if (mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600) {
@@ -105,11 +109,16 @@ String entrerIp() {
       clavier = false;
     }
   }
-  if (keyPressed == false) {
+  
+if (keyPressed == false) {
     clavier = true;
   }
   fill(255);
   text(ip, width/2, height/2); 
+  fill(255);
+  textSize(32);
+  text("Veuillez entrer l'adresse ip du serveur", width/2, 200);
+  textSize(32);
   rectangle(360, "Confirmer", 250);
   if (mouseY>=360 && mouseX>=250 && mouseY<=440 && mouseX<=600) {
     rectangle(360, "Confirmer", 150);
