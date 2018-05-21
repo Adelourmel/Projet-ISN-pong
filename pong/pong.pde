@@ -1,4 +1,4 @@
- //<>// //<>// //<>// //<>//
+ //<>// //<>//  //<>//
 import processing.net.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -70,15 +70,7 @@ void jeuSolo() {
   }
 }
 void jeuDuo() {
-  if ('s' == choixClavier()) {
-    clavier = true;
-    svr = false;
-  }
-  if ('c' == choixClavier()) {
-    clavier = false;
-    svr = false;
-  }
-  if (!svr) {
+
     if (i) {
       if (compteur()) {
       } else {
@@ -95,7 +87,7 @@ void jeuDuo() {
 
       updateScreen();
     }
-  }
+  
 }
 void jeuReseau() {
 
@@ -129,12 +121,13 @@ void jeuReseau() {
       } else {
         test = false;
       }
+      
     }
     if (!test) {
       
         client = new Client(this, adresseIp, 5204);
-        gauche = new Joueur(true, true);
-        droite = new Joueur(false, false);
+        gauche = new Joueur(true, clavier);
+        droite = new Joueur(false, clavier);
         i = false;
     }
   }
@@ -161,7 +154,7 @@ void jeuReseau() {
         balle.checkJoueur(droite); 
         balle.checkJoueur(gauche);
       }
-      if (frameCount % 2 == 0) {
+      if (frameCount % 4 == 0) {
         sendData();
       }
 
@@ -226,10 +219,10 @@ void init() {
 void computer() {
   if (balle.x<425 &&  balle.deplacementX<0) {
     if(gauche.y>balle.y-50){
-    gauche.y=gauche.y-6;
+    gauche.y=gauche.y-4;
     }
     if(gauche.y<balle.y-50){
-    gauche.y=gauche.y+6;
+    gauche.y=gauche.y+4;
     }
   }
 }
