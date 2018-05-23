@@ -1,4 +1,88 @@
+// Patie pour la gestion de la partie réseau
+//Fonction qui gère la partie réseau
+void jeuReseau() {
 
+  if (reseau == 'n') {
+    reseau = menuReseau();
+  }
+  if (i && reseau != 'n') {
+
+    Boolean test = true;
+    if (reseau == 's') {
+
+      //Executer serveur
+
+      if (test) {
+
+        if (svr) {      
+          svr = false;
+          //openServeur();
+        }
+
+        test = afficherIp();
+        adresseIp = "127.0.0.1";
+      }
+    }
+    if (reseau == 'c') {
+      if (adresseIp == " ") {
+        background(0);
+        adresseIp = entrerIp();
+      } else {
+        test = false;
+      }
+    }
+    if (!test) {
+      
+        
+        gauche = new Joueur(true, clavier);
+        droite = new Joueur(false, clavier);
+        i = false;
+    }
+  }
+  if (!i) {
+    if (clavierSouris) {
+      if ('s' == choixClavier()) {
+        clavier = true;
+        clavierSouris = false;
+        client = new Client(this, adresseIp, 5204);
+      }
+      if ('c' == choixClavier()) {
+        clavier = false;
+        clavierSouris = false;
+        client = new Client(this, adresseIp, 5204);
+      }
+
+    } 
+    else {
+      recevoirData();
+      if (connectionTest) {
+        fill(255);
+        text("En attente de l'adversaire", width/2, 125);
+      }
+      else {
+        if (!compteur()) {
+        if (reseau == 's') {
+          droite.updateDeplacement();
+        }
+        if (reseau == 'c') {
+          balle.deplacer();
+          gauche.updateDeplacement();
+          balle.checkJoueur(droite); 
+          balle.checkJoueur(gauche);
+        }
+        if (frameCount % 3 == 0) {
+          sendData();
+        }
+
+        updateScreen();
+      }
+      }
+        
+    }
+  }
+  
+}
+// Fonction permettant de récupérer l'adresse IP
 String getIp() {
   String adresseIp = " ";
   Boolean ipTest = true;
@@ -28,7 +112,7 @@ String getIp() {
   
   return adresseIp;
 }
-
+//Fonction permettant d'envoyer les données sur le serveur
 void sendData() {
   String message = " ";
   if (reseau == 's') {
@@ -39,7 +123,7 @@ void sendData() {
   }
   client.write(message);
 }
-
+//Fonction qui gère la reception des données
 void recevoirData() {
   int[] data = {};
   if (client.available() > 0) {
@@ -69,6 +153,7 @@ void recevoirData() {
   
   
 }
+//Fonction qui affiche l'IP pour le client qui a le serveur
 Boolean afficherIp() {
   background(0);
   textSize(32);
@@ -84,13 +169,14 @@ Boolean afficherIp() {
   }
   return true;
 }
+// Fonction qui demande d'entrer l'IP pour le client qui n'a pas le serveur
 String entrerIp() {
   if (svr) {
     ip = "";
     ip = getIp();
     svr = false;
   }
-
+// Permet de gérer les entrées au clavier
   if (keyPressed == true) { 
     
     if (clavier) {

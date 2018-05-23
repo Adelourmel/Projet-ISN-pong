@@ -1,3 +1,4 @@
+//Gestion des touches de contrôle lors d'un jeu
 void keyReleased() {
   if (cptDbtPt  == -1) {
     if (key == 'a'|| key =='A') {

@@ -1,3 +1,5 @@
+// Class permettant la gestion de la balle
+
 class Balle {
   int x = width/2;
   int y = height/2;
@@ -8,6 +10,7 @@ class Balle {
     fill(255);
     ellipse(x, y, ballSize, ballSize);
   }
+  //Fonction permettant de vérifier si le joueur respecte les conditions pour que la balle soit renvoyée
   void checkJoueur(Joueur player){
     if(player.x >= x - ballSize + deplacementX - 5 && player.x < x + deplacementX + 5 && player.y < y && (player.y + player.longueur) > y){
       deplacementX *= -1;
@@ -16,8 +19,9 @@ class Balle {
     }
   
   }
+  //Fonction qui permet le déplacement de la balle
   void deplacer(){
-    
+    // Condition dans le cas d'un rebond
     if (y + deplacementY > - 22+height  || y + deplacementY < 11+ballSize/2){
       deplacementY *= -1;
       

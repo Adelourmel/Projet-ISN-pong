@@ -1,4 +1,3 @@
-
 import processing.net.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -23,6 +22,7 @@ void setup() {
   size(850, 600);
   balle = new Balle();
 }
+// Fonction principale
 void draw() {
 
   switch (choix) {
@@ -42,7 +42,7 @@ void draw() {
 
   }
 }
-
+// Fonction qui gère les parties joueur contre ordinateur
 void jeuSolo() {
   if (i) {
 
@@ -90,143 +90,7 @@ void jeuDuo() {
     }
   
 }
-void jeuReseau() {
 
-  if (reseau == 'n') {
-    reseau = menuReseau();
-  }
-  if (i && reseau != 'n') {
-
-    Boolean test = true;
-    if (reseau == 's') {
-
-      //Executer serveur
-
-      if (test) {
-
-        if (svr) {      
-          svr = false;
-          //openServeur();
-        }
-
-        test = afficherIp();
-        adresseIp = "127.0.0.1";
-      }
-    }
-    if (reseau == 'c') {
-      if (adresseIp == " ") {
-        background(0);
-        adresseIp = entrerIp();
-      } else {
-        test = false;
-      }
-    }
-    if (!test) {
-      
-        
-        gauche = new Joueur(true, clavier);
-        droite = new Joueur(false, clavier);
-        i = false;
-    }
-  }
-  if (!i) {
-    if (clavierSouris) {
-      if ('s' == choixClavier()) {
-        clavier = true;
-        clavierSouris = false;
-        client = new Client(this, adresseIp, 5204);
-      }
-      if ('c' == choixClavier()) {
-        clavier = false;
-        clavierSouris = false;
-        client = new Client(this, adresseIp, 5204);
-      }
-
-    } 
-    else {
-      recevoirData();
-      if (connectionTest) {
-        background(0);
-        fill(255);
-        text("En attente de l'adversaire", width/2, 125);
-      }
-      else {
-        if (!compteur()) {
-        if (reseau == 's') {
-          droite.updateDeplacement();
-        }
-        if (reseau == 'c') {
-          balle.deplacer();
-          gauche.updateDeplacement();
-          balle.checkJoueur(droite); 
-          balle.checkJoueur(gauche);
-        }
-        if (frameCount % 3 == 0) {
-          sendData();
-        }
-
-        updateScreen();
-      }
-      }
-        
-    }
-  }
-  
-}
-void updateScreen() {
-  background(0);
-  delimitation();
-  score();
-  balle.afficher();
-  gauche.afficher();
-  droite.afficher();
-}
-Boolean compteur() {
-  if (cptDbtPt >= 0) {
-    textSize(105);
-    fill(250);
-    delay (1000);
-    background(0);
-    cptDbtPt--;
-
-    text(cptDbtPt, width/2, height/2);
-    textAlign(CENTER);
-    return true;
-  }
-  return false;
-}
-void openServeur () {   
-  String[] cmd = {"start \"test\"serveur.exe"};
-
-
-
-  Process p;
-  try { 
-    int error;
-    p = launch(cmd);
-    p.waitFor();
-    error = p.exitValue();
-  } 
-  catch (InterruptedException e) {
-    e.printStackTrace();
-  }
-}
-String replaceWhitespace(String str) {
-  if (str.contains(" ")) {
-    str = str.replace(" ", "%20");
-  }
-  return str;
-}
-void init() {
-  adresseIp = " ";
-  clavier = true;
-  choix = 0;
-  cptDbtPt = 4;
-  svr  = true;
-  i = true;
-  reseau = 'n';
-  clavierSouris = true;
-}
 void computer() {
   if (balle.x<425) {
     if (gauche.y >23) {
@@ -240,4 +104,45 @@ void computer() {
       gauche.y=gauche.y+4;
     }
   }
+}
+// Compteur de début de partie
+Boolean compteur() {
+  if (cptDbtPt > 0) {
+    textSize(105);
+    fill(250);
+    background(0);
+    cptDbtPt--;
+
+    text(cptDbtPt, width/2, height/2);
+    textAlign(CENTER);
+    delay (1000);
+    return true;
+  }
+  cptDbtPt = -1;
+  return false;
+}
+// Fonction permettant de réinitialiser toutes les varibles globales
+void init() {
+  noStroke();
+  adresseIp = " ";
+  clavier = true;
+  choix = 0;
+  cptDbtPt = 4;
+  svr  = true;
+  i = true;
+  reseau = 'n';
+  connectionTest = true;
+  clavierSouris = true;
+}
+//Permet d'afficher à l'écran le jeu
+void updateScreen() {
+  color c = color(0, 0, 0, 120);
+  fill(c);
+  rect(0, 0, width, height);
+
+  delimitation();
+  score();
+  balle.afficher();
+  gauche.afficher();
+  droite.afficher();
 }

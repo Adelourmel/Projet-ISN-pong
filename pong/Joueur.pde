@@ -1,3 +1,4 @@
+//Class pour les joueurs
 class Joueur {
   int x;
   int y;
@@ -8,6 +9,7 @@ class Joueur {
   Boolean souris = false;
   Boolean sourisTest = true;
   Joueur(Boolean place, Boolean psouris){
+     // Permet de connaitre si le joueur est à droite ou à gauche
     if (place){
       x = 20;
     }
@@ -15,9 +17,10 @@ class Joueur {
       x = width - (largeur+25);
     }
     y = height/2 - longueur;
+    //Dans le cas ou le joueur joue avec la souris
     souris = psouris;
   }
-  
+  //Affiche le joueur 
   void afficher(){
       rect(x, y, largeur, longueur);
 
@@ -43,6 +46,7 @@ class Joueur {
        }
     }
   }
+  //Permet d'éviter un bug de déplacement
   void deplacer(int deplacement){
     bouger = deplacement;
   }

@@ -42,6 +42,7 @@ void rectangle(int y, String text, int C) {
   text(text, 425, y+40);
   textAlign(CENTER);
 }
+//Menu pou la partie réseau
 char menuReseau() {
   background(0);
   rectangle(60, "Je suis le serveur", 250);
@@ -60,6 +61,7 @@ char menuReseau() {
   }
   return 'n';
 }
+//Menu pour gérer le choix du clavier ou de la souris
 char choixClavier() {
   background(0);
   rectangle(160, "Jouer avec le clavier", 250);
@@ -71,10 +73,10 @@ char choixClavier() {
     rectangle(260, "Jouer avec la souris", 150);
   }
   if ((mouseY>=160 && mouseX>=250 && mouseY<=240 && mouseX<=600)&& (mousePressed == true)) { 
-    return 'c';
+    return 'c'; //Cas ou le joueur souhaite jouer au clavier
   }
   if ((mouseY>=260 && mouseX>=250 && mouseY<=340 && mouseX<=600)&& (mousePressed == true)) { 
-    return 's';
+    return 's'; //Cas ou le joueur souhaite jouer à la souris
   }
   return 'n';
 }
